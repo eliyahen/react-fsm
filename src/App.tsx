@@ -1,6 +1,8 @@
+import Example from "./example/login-wizard"
+
 function App() {
   return (
-    <div>Initialized!</div>
+    <Example />
   )
 }
 
