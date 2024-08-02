@@ -1,5 +1,5 @@
 import React from "react"
-import { useFSMachine } from "../../module"
+import { useFSMachine } from "../module"
 import { MultiFactorAuthLoginSteps, SendMethod } from "./MultiFactorAuthLoginProvider"
 import './styles.scss'
 

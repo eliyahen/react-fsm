@@ -1,5 +1,5 @@
 import React from "react";
-import FSMachine, { FSMStatesTriggersDef } from "../../module";
+import FSMachine, { FSMStatesTriggersDef } from "../module";
 
 export type SendMethod = 'application' | 'sms' | 'email' 
 

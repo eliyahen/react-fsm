@@ -1,4 +1,4 @@
-import Example from "./example/login-wizard"
+import Example from "./example"
 
 function App() {
   return (
