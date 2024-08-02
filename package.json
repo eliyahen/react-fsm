@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "homepage": "https://github.com/eliyahen/react-fsm",
+  "main": "/src/module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

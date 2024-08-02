@@ -12,7 +12,7 @@ const initialMachineApi: FSMachineApi<any, any> = {
     getAllStates: () => [],
     getAllTriggers: () => [],
     getStateTriggers: () => [],
-    invokeStateTrigger: () => async () => {},
+    invokeStateTrigger: () => () => async () => {},
     addTransitionDoneListener: () => () => {},
     addTriggerInvokeListener: () => () => {},
 }
@@ -87,36 +87,34 @@ function FSMachine<
 
     const invokeStateTrigger = React.useCallback(
         <State extends FSMStates<StatesDef>>(state: State) =>
-            async <Trigger extends FSMStateTriggers<StatesDef, State> = FSMStateTriggers<StatesDef, State>>(
-                trigger: Trigger,
-                ...args: FSMStateTriggerArgs<StatesDef, State, Trigger>
-            ) => {
-                // only invoke trigger when the given state is matching the current state
-                if (state === dataRef.current.curState && !dataRef.current.isBlocked) {
-                    // get the trigger function of the current state
-                    const stateTriggerFn = machineDeclaration[dataRef.current.curState][trigger]
+            <Trigger extends FSMStateTriggers<StatesDef, State> = FSMStateTriggers<StatesDef, State>>(trigger: Trigger) =>
+                async (...args: FSMStateTriggerArgs<StatesDef, State, Trigger>) => {
+                    // only invoke trigger when the given state is matching the current state
+                    if (state === dataRef.current.curState && !dataRef.current.isBlocked) {
+                        // get the trigger function of the current state
+                        const stateTriggerFn = machineDeclaration[dataRef.current.curState][trigger]
 
-                    // mark machine is blocked for triggers
-                    setIsBlocked(true)
+                        // mark machine is blocked for triggers
+                        setIsBlocked(true)
 
-                    //handle prop onTriggerInvoke and emit triggerInvoke event
-                    onTriggerInvoke?.(dataRef.current.curState, dataRef.current.curPayload, trigger, ...args)
-                    eventEmitterRef.current.emit(EVENT_TRIGGER_INVOKE, dataRef.current.curState, dataRef.current.curPayload, trigger, ...args)
+                        //handle prop onTriggerInvoke and emit triggerInvoke event
+                        onTriggerInvoke?.(dataRef.current.curState, dataRef.current.curPayload, trigger, ...args)
+                        eventEmitterRef.current.emit(EVENT_TRIGGER_INVOKE, dataRef.current.curState, dataRef.current.curPayload, trigger, ...args)
 
-                    // call the trigger function, pass it the machine API to enable transition to new state, and call it again with the trigger arguments.
-                    // Note: Though we expect to have a synchronous trigger function, we use "await" to block the 
-                    await stateTriggerFn({
-                        state: dataRef.current.curState,
-                        payload: dataRef.current.curPayload,
-                        isBlocked: dataRef.current.isBlocked,
-                        transition: commitTransition,
-                        getAllStates,
-                    })(...args)
+                        // call the trigger function, pass it the machine API to enable transition to new state, and call it again with the trigger arguments.
+                        // Note: Though we expect to have a synchronous trigger function, we use "await" to block the 
+                        await stateTriggerFn({
+                            state: dataRef.current.curState,
+                            payload: dataRef.current.curPayload,
+                            isBlocked: dataRef.current.isBlocked,
+                            transition: commitTransition,
+                            getAllStates,
+                        })(...args)
 
-                    // revert machine to not blocked, so it can accept new triggers
-                    setIsBlocked(false)
-                }
-            },
+                        // revert machine to not blocked, so it can accept new triggers
+                        setIsBlocked(false)
+                    }
+                },
         [machineDeclaration, onTriggerInvoke, commitTransition, getAllStates, getAllTriggers, getStateTriggers]
     )
 

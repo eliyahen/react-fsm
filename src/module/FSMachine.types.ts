@@ -99,14 +99,12 @@ export interface FSMachineApi<
      * Though trigger functions should be synchronous, this function still returns a promise for a case the trigger function is async.
      * 
      * @param state state to match invoke trigger from
-     * @param trigger trigger to invoke
-     * @param args arguments to pass to the trigger
+     * @returns function that get state trigger name, which returns the trigger function itself.
      */
     invokeStateTrigger: <State extends FSMStates<StatesDef>>(state: State) =>
-        <Trigger extends FSMStateTriggers<StatesDef, State>>(
-            trigger: Trigger,
-            ...args: FSMStateTriggerArgs<StatesDef, State, Trigger>
-        ) => Promise<void>
+        <Trigger extends FSMStateTriggers<StatesDef, State>>(trigger: Trigger) =>
+            (...args: FSMStateTriggerArgs<StatesDef, State, Trigger>
+) => Promise<void>
 
     /**
      * Adds an event listener for transition done.

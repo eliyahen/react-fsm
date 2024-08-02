@@ -11,26 +11,26 @@ function MultiFactorAuthLoginWizard() {
             <h4>Multi-Factor Auth Login</h4>
 
             {state === 'welcome' && (
-                <WelcomeScreen onStart={() => invokeStateTrigger(state)('start')} />)}
+                <WelcomeScreen onStart={invokeStateTrigger(state)('start')} />)}
             {state === 'userCredentials' && (
                 <UserCredentialsScreen
                     initialSendMethod={getPayload<typeof state>().sendMethod}
-                    onValidate={(...args) => invokeStateTrigger(state)('validate', ...args)}
+                    onValidate={invokeStateTrigger(state)('validate')}
                 />)}
             {state === 'verificationCode' && 
                 (<VerificationCodeScreen
                     sendMethod={getPayload<typeof state>().sendMethod}
-                    onValidate={(code) => invokeStateTrigger(state)('validate', code)}
-                    onChangeMethod={() => invokeStateTrigger(state)('changeSendMethod')}
+                    onValidate={invokeStateTrigger(state)('validate')}
+                    onChangeMethod={invokeStateTrigger(state)('changeSendMethod')}
                 />)}
             {state === 'changeSendMethod' && (
                 <ChangeSendMethodScreen
                     initialSendMethod={getPayload<typeof state>().sendMethod}
-                    onChangeMethod={(sendMethod) => invokeStateTrigger(state)('resendVerificationCode', sendMethod)}
-                    onCancel={() => invokeStateTrigger(state)('cancel')}
+                    onChangeMethod={invokeStateTrigger(state)('resendVerificationCode')}
+                    onCancel={invokeStateTrigger(state)('cancel')}
                 />)}
             {state === 'loginFaulure' && (
-                <LoginFaulureScreen onRetry={() => invokeStateTrigger(state)('retry')} />)}
+                <LoginFaulureScreen onRetry={invokeStateTrigger(state)('retry')} />)}
             {state === 'loginSuccess' && (
                 <LoginSuccessScreen />)}
 
