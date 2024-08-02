@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "https://github.com/eliyahen/react-fsm",
+  "homepage": "https://eliyahen.github.com/react-fsm",
   "main": "/src/module",
   "scripts": {
     "dev": "vite",
