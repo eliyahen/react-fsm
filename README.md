@@ -3,6 +3,10 @@
 Finite State Machine (FSM) for React.
 FSM is a computational model that consists of a finite number of states. It transitions between these states based on inputs or event triggers. Each transition moves the FSM from one state to another, based on the current state and the input received. FSMs are used to model systems with distinct conditions or statuses and can help manage complex workflows and behaviors systematically.
 
+### Demo
+
+[See demo here](https://eliyahen.github.io/react-fsm/)
+
 ### Installation
 
 ```zsh
