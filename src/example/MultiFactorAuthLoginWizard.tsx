@@ -47,7 +47,9 @@ function WelcomeScreen({onStart}: {onStart: () => void}) {
     return (
         <>
             <h4>Welcome stranger!</h4>
-            <button onClick={onStart}>Start</button>
+            <div className="bottom">
+                <button onClick={onStart}>Start</button>
+            </div>
         </>
     )
 }
@@ -67,12 +69,18 @@ function UserCredentialsScreen({initialSendMethod = 'sms', onValidate}: {initial
             <form onSubmit={handleSubmit} className="vertical-flex">
                 <label>Email: <input name="email" type="text" value={email} onChange={(evt) => setEmail(evt.target.value)} /></label>
                 <label>Password: <input name="password" type="password" value={password} onChange={(evt) => setPassword(evt.target.value)} /></label>
-                <select name="sendMethod" value={sendMethod} onChange={(evt) => setSendMethod(evt.target.value as SendMethod)}>
-                    <option value="sms">SMS</option>
-                    <option value="email">Email</option>
-                    <option value="application">Application</option>
-                </select>
-                <button type="submit">Submit</button>
+                <label>
+                    Method:
+                    <select name="sendMethod" value={sendMethod} onChange={(evt) => setSendMethod(evt.target.value as SendMethod)}>
+                        <option value="sms">SMS</option>
+                        <option value="email">Email</option>
+                        <option value="application">Application</option>
+                    </select>
+                </label>
+                <div className="hint"><b>Hint:</b> Put anything in email and password fields to verify.</div>
+                <div className="bottom">
+                    <button type="submit">Submit</button>
+                </div>
             </form>
         </>
     )
@@ -93,9 +101,12 @@ function VerificationCodeScreen({sendMethod, onValidate, onChangeMethod}: {sendM
     return (
         <>
             <form onSubmit={handleSubmit} className="vertical-flex">
-                <label>Verification Code: <input name="verificationCode" type="text" value={code} onChange={(evt) => setCode(evt.target.value)} /></label>
-                <button type="submit">Submit</button>
-                <div>Verification code was sent to you by {sendMethod}. <button className="asLink" onClick={handleChangeMethod}>Change</button></div>
+                <label>Code: <input name="verificationCode" type="text" value={code} onChange={(evt) => setCode(evt.target.value)} /></label>
+                <div className="small">Verification code was sent to you by <b>{sendMethod}</b>. <button className="asLink" onClick={handleChangeMethod}>Change</button></div>
+                <div className="hint"><b>Hint:</b> Correct code is 1234.</div>
+                <div className="bottom">
+                    <button type="submit">Submit</button>
+                </div>
             </form>
         </>
     )
@@ -106,13 +117,18 @@ function ChangeSendMethodScreen({initialSendMethod, onChangeMethod, onCancel}: {
 
     return (
         <>
-            <select name="sendMethod" value={sendMethod} onChange={(evt) => setSendMethod(evt.target.value as SendMethod)}>
-                <option value="sms">SMS</option>
-                <option value="email">Email</option>
-                <option value="application">Application</option>
-            </select>
-            <button onClick={() => onChangeMethod(sendMethod)}>Change</button>
-            <button onClick={onCancel}>Cancel</button>
+            <label>
+                Method:
+                <select name="sendMethod" value={sendMethod} onChange={(evt) => setSendMethod(evt.target.value as SendMethod)}>
+                    <option value="sms">SMS</option>
+                    <option value="email">Email</option>
+                    <option value="application">Application</option>
+                </select>
+            </label>
+            <div className="bottom">
+                <button onClick={() => onChangeMethod(sendMethod)}>Change</button>
+                <button onClick={onCancel}>Cancel</button>
+            </div>
         </>
     )
 }
@@ -125,7 +141,9 @@ function LoginFaulureScreen({onRetry}: {onRetry: () => void}) {
     return (
         <>
             <div>Sorry, we could not log you in.</div>
-            <button onClick={onRetry}>Retry</button>
+            <div className="bottom">
+                <button onClick={onRetry}>Retry</button>
+            </div>
         </>
     )
 }
