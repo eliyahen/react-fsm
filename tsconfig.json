@@ -7,5 +7,16 @@
     {
       "path": "./tsconfig.node.json"
     },
-  ]
+  ],
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["jest", "node"]
+  },
+  "include": ["src", "setupTests.ts"]
 }
