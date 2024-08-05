@@ -2,9 +2,6 @@
   "files": [],
   "references": [
     {
-      "path": "./tsconfig.app.json"
-    },
-    {
       "path": "./tsconfig.node.json"
     },
   ],
@@ -18,5 +15,4 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["jest", "node"]
   },
-  "include": ["src", "setupTests.ts"]
 }
